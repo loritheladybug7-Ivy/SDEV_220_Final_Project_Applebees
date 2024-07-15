@@ -2,7 +2,7 @@
 
 <h3>Description:</h3>
 This is our final project for SDEV 220 at Ivy Tech Community College. 
-We are designing a program for Applebee's to organize their recipes to help utilize their supply and reduce food waste.
+We are designing a program for Applebee's to organize their recipes.
 
 
 The minimum requirements are as follows:
@@ -14,7 +14,14 @@ The minimum requirements are as follows:
 </ul>
 
 <h3>Challenges:</h3>
-This is our first class that is completely in Python.
+This is our first class that is completely in Python, and that means our skill levels are varied and on the lower side. 
+Since we are early students, not everyone was great at recognizing their own strengths.
+</p>
+We initially had some trouble getting everyone connected to the online resources (GitHub and Trello/Kaban Board) but were able to work that out quickly. We have scaled back the app as initially we had included more features than required. Reducing the scope allowed us easily meet the deadline.
+
+<h3>About the Program:</h3>
+
+<img src="https://github.com/loritheladybug7-Ivy/SDEV_220_Final_Project_Applebees/blob/main/Flowchart_and_Application_Design.jpg" alt="Image of the flowchart for our Applebee's Receipe App">
 
 <h3>How to Install and Run the Project:</h3>
 (coming soon)
