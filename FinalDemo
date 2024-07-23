@@ -45,7 +45,12 @@ class RecipeApp:
         self.entrees = Entrees()
         self.drinks = Drinks()
         self.desserts = Desserts()
-        
+
+        # Load and display logo image
+        self.logo_img = tk.PhotoImage(file="logo_300.gif")
+        self.logo_label = tk.Label(root, image=self.logo_img)
+        self.logo_label.pack(pady=1)
+
         # Create GUI elements
         self.label = tk.Label(root, text="Select a category to view recipes:")
         self.label.pack(pady=10)
