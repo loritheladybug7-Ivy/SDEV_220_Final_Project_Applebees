@@ -6,27 +6,25 @@
 #importing tkinter the program we are using for our Gui representation
 import tkinter as tk
 
-#our first class, which we are saving for Entrees for the restaurant, with dicts inside of the class holding the recipe
+# Classes to hold recipes
 class Entrees:
     def __init__(self):
         self.recipes = {
-            "Fiesta Lime Chicken": "Ingredients: \n 1 ½ lbs. chicken breasts cut into 4 portions\n 2 Tbsp. lime juice\n 1 Tbsp. soy sauce\n 2 Tbsp. taco seasoning\n 1 tsp. Worcestershire sauce\n 2 Tbsp. oil olive or avocado\n 1 Tbsp. honey\n ½ tsp. salt to taste\n 4 oz. Colby Jack cheese slices. \nTo do: \n Marinate Chicken inn marinade for 30 minutes, add to tray with veggies and bake at 350 F for 40 minutes.\n ",
+            "Fiesta Lime Chicken": "Ingredients: \n 1 ½ lbs. chicken breasts cut into 4 portions\n 2 Tbsp. lime juice\n 1 Tbsp. soy sauce\n 2 Tbsp. taco seasoning\n 1 tsp. Worcestershire sauce\n 2 Tbsp. oil olive or avocado\n 1 Tbsp. honey\n ½ tsp. salt to taste\n 4 oz. Colby Jack cheese slices. \nTo do: \n Marinate Chicken in marinade for 30 minutes, add to tray with veggies and bake at 350 F for 40 minutes.\n ",
             "Ribeye Steak": "Ingredients: \n 1 2-inch thick bone-in ribeye steak (about 2 lbs.)\n Kosher salt\n Freshly ground black pepper\n 1 Tbsp. extra-virgin olive oil\n 2 Tbsp. unsalted butter\n 3 garlic cloves lightly smashed\n 2-3 sprigs fresh thyme\n 2-3 sprigs fresh rosemary\n Flaky sea salt. \nTo do: \n Cook steak to customer preference in seasonings.\n",
-            "Bourbon Street Chicken & Shrimp": "Ingredients: \n 4 boneless skinless chicken breasts\n 1 pound medium shrimp peeled and deveined\n 2 tablespoons extra virgin olive oil divided use\n 1 tablespoon minced garlic\n ½ cup unsalted butter divided use\n ¼ cup chicken bone broth\n 1 cup baby bella mushrooms sliced\n 1 white onion sliced\n 1 teaspoon dried parsley\n ¼ cup fresh parsley. \nTo do: \n Marinate meat for 30 mminutes. Pan fry meat and veggies.\n",
+            "Bourbon Street Chicken & Shrimp": "Ingredients: \n 4 boneless skinless chicken breasts\n 1 pound medium shrimp peeled and deveined\n 2 tablespoons extra virgin olive oil divided use\n 1 tablespoon minced garlic\n ½ cup unsalted butter divided use\n ¼ cup chicken bone broth\n 1 cup baby bella mushrooms sliced\n 1 white onion sliced\n 1 teaspoon dried parsley\n ¼ cup fresh parsley. \nTo do: \n Marinate meat for 30 minutes. Pan fry meat and veggies.\n",
             # Add more recipes as needed
         }
 
-##our second class, which we are saving for Drinks for the restaurant, with dicts inside of the class holding the recipe
 class Drinks:
     def __init__(self):
         self.recipes = {
             "Bahama Mama": "Ingredients: \n 0.5 oz Aged Jamaican Rum\n 0.25 oz Light over-proof Rum\n 0.25 oz Coconut Rum (more than 35% ABV)\n 0.25 oz Coconut Liqueur (below 30% ABV)\n 0.25 oz Coffee liqueur\n 0.5 oz Fresh lime juice\n 2.5 oz Fresh pineapple juice. \nTo do: \n Combine into shaker with ice, shake and pour into glass. Serve.\n",
             "Mango Lemonade": "Ingredients: \n 1 ripe mango\n 1 lemon\n ⅓ cup agave nectar\n 5 small mint leaves\n 3 cups cold water. \nTo do: \n Blend mango, mix with rest, combine and pour. Serve.\n",
-            "Long Island Iced Tea": "Ingredients \n ½ fluid ounce vodka\n ½ fluid ounce rum\n ½ fluid ounce gin\n ½ fluid ounce tequila\n ½ fluid ounce triple sec (orange-flavored liqueur)\n 1 fluid ounce sweet and sour mix\n 1 fluid ounce cola\n or to taste\n 1 lemon slice.  \nTo do: \n Combine liquors. Shake and pour, splash with coke, garnish with lemon.\n",
+            "Long Island Iced Tea": "Ingredients \n ½ fluid ounce vodka\n ½ fluid ounce rum\n ½ fluid ounce gin\n ½ fluid ounce tequila\n ½ fluid ounce triple sec (orange-flavored liqueur)\n 1 fluid ounce sweet and sour mix\n 1 fluid ounce cola\n or to taste\n 1 lemon slice. \nTo do: \n Combine liquors. Shake and pour, splash with coke, garnish with lemon.\n",
             # Add more drinks as needed
         }
 
-#our third class, which we are saving for Desserts for the restaurant, with dicts inside of the class holding the recipe
 class Desserts:
     def __init__(self):
         self.recipes = {
@@ -37,45 +35,91 @@ class Desserts:
         }
 
 class RecipeApp:
+
     def __init__(self, root):
         self.root = root
         self.root.title("Applebee's Recipes")
-        
+
         # Create Entrees, Drinks, and Desserts instances
         self.entrees = Entrees()
         self.drinks = Drinks()
         self.desserts = Desserts()
-        
+
+        # Load and display logo image
+        self.logo_img = tk.PhotoImage(file="logo_300.gif")
+        self.logo_label = tk.Label(root, image=self.logo_img)
+        self.logo_label.pack()
+
         # Create GUI elements
         self.label = tk.Label(root, text="Select a category to view recipes:")
         self.label.pack(pady=10)
-        
+
+        # Primary dropdown menu for categories
         self.category_var = tk.StringVar()
         self.category_var.set("Entrees")  # Default category
-        
-        self.category_menu = tk.OptionMenu(root, self.category_var, "Entrees", "Drinks", "Desserts", command=self.display_recipes)
+
+        self.category_menu = tk.OptionMenu(
+            root,
+            self.category_var,
+            "Entrees",
+            "Drinks",
+            "Desserts",
+            command=self.update_secondary_menu
+        )
         self.category_menu.pack(pady=10)
-        
+
+        # Secondary dropdown menu for recipe names
+        self.recipe_var = tk.StringVar()
+        self.recipe_var.set("Select Recipe")  # Default value
+        self.recipe_menu = tk.OptionMenu(root, self.recipe_var, [])
+        self.recipe_menu.pack(pady=10)
+
+        # Text widget to display recipe details
         self.recipe_text = tk.Text(root, height=10, width=60, wrap=tk.WORD)
         self.recipe_text.pack(pady=10)
+
+        # Initialize menus
+        self.update_secondary_menu("Entrees")  # Populate with default category recipes
+
+    def update_secondary_menu(self, selected_category):
+        # Clear recipe details
+        self.recipe_text.delete('1.0', tk.END)
         
-        self.display_recipes("Entrees")  # Display default category recipes
-        
-    def display_recipes(self, category):
-        self.recipe_text.delete('1.0', tk.END)  # Clear previous recipes
-    #if else etc statements to display which one the user is choosing to view
+        # Update secondary dropdown based on selected category
+        recipes_dict = {}
+        if selected_category == "Entrees":
+            recipes_dict = self.entrees.recipes
+        elif selected_category == "Drinks":
+            recipes_dict = self.drinks.recipes
+        elif selected_category == "Desserts":
+            recipes_dict = self.desserts.recipes
+
+        # Update recipe dropdown menu
+        menu = self.recipe_menu["menu"]
+        menu.delete(0, "end")  # Clear existing items
+
+        # Add new items
+        for recipe_name in recipes_dict:
+            menu.add_command(label=recipe_name, command=tk._setit(self.recipe_var, recipe_name, self.display_recipe))
+
+        # Set the first item as the default selection
+        if recipes_dict:
+            self.recipe_var.set(next(iter(recipes_dict)))
+
+    def display_recipe(self, selected_recipe):
+        # Display selected recipe details
+        recipes_dict = {}
+        category = self.category_var.get()
         if category == "Entrees":
             recipes_dict = self.entrees.recipes
         elif category == "Drinks":
             recipes_dict = self.drinks.recipes
         elif category == "Desserts":
             recipes_dict = self.desserts.recipes
-        else:
-            return
-        
-        for recipe_name, recipe_description in recipes_dict.items():
-            self.recipe_text.insert(tk.END, f"{recipe_name}:\n")
-            self.recipe_text.insert(tk.END, f"{recipe_description}\n\n")
+
+        recipe_description = recipes_dict.get(selected_recipe, "Recipe not found")
+        self.recipe_text.delete('1.0', tk.END)  # Clear previous recipe
+        self.recipe_text.insert(tk.END, recipe_description)
 
 # Main tkinter loop
 if __name__ == "__main__":
